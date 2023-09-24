@@ -42,9 +42,60 @@ h1 {
 .photographer_section article h2 {
     color: #D3573C;
     font-size: 36px;
+    margin: 0px;
+}
+.format-image {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+    fill: #C4C4C4;
+    filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.25));
+}
+.photographer_section article img {
+    width: 526px;
+    height: 358px;
+    margin: -50px -164px -108px -162px;
+    object-fit: cover;
+
+}
+.photographer_section article h3 {
+    color: #901C1C;
+    text-align: center;
+    font-family: DM Sans;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    margin: 0px;
+}
+.format-location {
+    display: flex;
+}
+.comma {
+    display: flex;
+    align-items: center;
+    margin-right: 2px;
+}
+.photographer_section article p {
+    color: #000;
+    text-align: center;
+    font-family: DM Sans;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    margin: 0px;
 }
 
-.photographer_section article img {
-    height: 200px;
-    width: 200px;
+.photographer_section article span {
+    color: #757575;
+    text-align: center;
+    font-family: DM Sans;
+    font-size: 9px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
