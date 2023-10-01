@@ -39,6 +39,21 @@ function photographerTemplate(data) {
         contactButton.textContent = 'Contactez-moi';
         contactButton.onclick = displayModal;
 
+        const likespriceContainer = document.querySelector('.likes_price')
+        const priceContainer = document.createElement('div')
+        priceContainer.classList.add('price_container')
+        const spanPrice = document.createElement('span')
+        spanPrice.textContent = price + " €/jour"
+        priceContainer.appendChild(spanPrice)
+        likespriceContainer.appendChild(priceContainer)
+
+        const modalHeader = document.querySelector('.modal_header');
+
+        const contactNameSpan = document.createElement('span');
+        contactNameSpan.textContent = name;
+
+        modalHeader.appendChild(contactNameSpan);
+
         profilimage.appendChild(img);
         profildescription.appendChild(h2);
         profildescription.appendChild(locationcontainer)
@@ -56,10 +71,38 @@ function photographerTemplate(data) {
 
     return { name, picture, getUserCardDOM };
 }
+let totalLikes = 0;
+const likesArray=[];
 
-function mediaTemplate (data) {
-    const { title, photographerId, image, likes, date, price} = data;
+function mediaTemplate(data) {
+    const { title, photographerId, image, video, likes, date } = data;
     const imageUrl = `assets/photographers/${photographerId}/${image}`;
+    const videoUrl = `assets/photographers/${photographerId}/${video}`;
+    const isVideo = video !== undefined;
+    let currentSlideIndex = 1;
+    const mediaCards = document.querySelectorAll('.card_media');
+    const numberOfMediaCards = mediaCards.length;
+    for (i = 0; i < numberOfMediaCards ; i++) {
+        currentSlideIndex++
+    }
+
+    likesArray.push(likes)
+    let totalLikes = likesArray.reduce((acc, currentLike) => acc + currentLike, 0);
+    const likespriceContainer = document.querySelector('.likes_price')
+    const likesContainer = document.createElement('div')
+    likesContainer.classList.add('likes_container')
+    const spanLikes = document.createElement('span')
+    spanLikes.classList.add('number')
+    spanLikes.textContent = totalLikes
+    const previousLikeSpans = document.querySelectorAll('.number');
+    previousLikeSpans.forEach(likeSpan => {
+        likeSpan.style.display = 'none';
+    });
+    const spanhearts = document.createElement('i');
+    spanhearts.classList.add('fa', 'fa-solid', 'fa-heart');
+    likesContainer.appendChild(spanLikes)
+    spanLikes.appendChild(spanhearts)
+    likespriceContainer.appendChild(likesContainer);
 
     function getMediaCardDOM() {
         const mediaContainer = document.createElement('div');
@@ -68,9 +111,21 @@ function mediaTemplate (data) {
         const profilimage = document.createElement('div');
         profilimage.classList.add('media_image');
 
-        const img = document.createElement('img');
-        img.setAttribute("src", imageUrl);
+        if (isVideo) {
+            const video = document.createElement('video');
+            video.setAttribute('src', videoUrl);
+            video.setAttribute('controls', ''); 
+            video.setAttribute('autoplay', '');
+            video.setAttribute('onClick', `openLightbox(); currentSlide(${currentSlideIndex});`);
+            profilimage.appendChild(video);
+        } else {
+            const img = document.createElement('img');
+            img.setAttribute('src', imageUrl);
+            img.setAttribute('onClick', `openLightbox(); currentSlide(${currentSlideIndex});`);
+            profilimage.appendChild(img);
+        }
 
+    
         const mediadescription = document.createElement('div');
         mediadescription.classList.add('media_description');
 
@@ -83,18 +138,102 @@ function mediaTemplate (data) {
         const span = document.createElement('span');
         span.textContent = likes;
 
-        const spanlikes = document.createElement('i');
-spanlikes.classList.add('fa', 'fa-solid', 'fa-heart');
-
+        const spanhearts = document.createElement('i');
+        spanhearts.classList.add('fa', 'fa-solid', 'fa-heart');
         mediaContainer.appendChild(profilimage);
         mediaContainer.appendChild(mediadescription);
-        profilimage.appendChild(img);
         mediadescription.appendChild(h2);
         mediadescription.appendChild(likesnumber);
         likesnumber.appendChild(span);
-        likesnumber.appendChild(spanlikes);
+        likesnumber.appendChild(spanhearts);
 
-        return mediaContainer
+
+        const mediaContent = document.querySelector(".media-content")
+        const lightboxContainer = document.createElement('div')
+        lightboxContainer.classList.add('img-slides')
+        mediaContent.appendChild(lightboxContainer)
+
+        if (isVideo) {
+            const video = document.createElement('video');
+            video.setAttribute('src', videoUrl);
+            video.setAttribute('controls', ''); 
+            video.setAttribute('autoplay', '');
+            lightboxContainer.appendChild(video);
+        } else {
+            const img = document.createElement('img');
+            img.setAttribute('src', imageUrl);
+            lightboxContainer.appendChild(img);
+        }
+
+        const lightboxTitle = document.createElement('h2')
+        lightboxTitle.textContent = title
+
+        lightboxContainer.appendChild(lightboxTitle)
+        return mediaContainer;
     }
-    return { title, image, getMediaCardDOM };
+
+
+    return { title, image, video, getMediaCardDOM };
+}
+function updateLikes(likesArray) {
+    const totalLikes = likesArray.reduce((acc, currentLike) => acc + currentLike, 0);
+    const spanLikes = document.querySelector('.likes_container .number');
+    spanLikes.textContent = totalLikes;
+}
+
+document.addEventListener('click', function (event) {
+    if (event.target.classList.contains('fa-heart')) {
+        const span = event.target.parentElement.querySelector('span');
+
+        const isLiked = span.getAttribute('data-liked') === 'true';
+
+        if (isLiked) {
+            span.setAttribute('data-liked', 'false');
+            span.textContent = parseInt(span.textContent) - 1;
+            likesArray.pop();
+
+        } else {
+            span.setAttribute('data-liked', 'true');
+            span.textContent = parseInt(span.textContent) + 1;
+            likesArray.push(1);
+        }
+        updateLikes(likesArray);
+        
+    }
+});
+
+function openLightbox () {
+    slideIndex = 1;
+    document.getElementById('lightbox').style.display="block";
+}
+function closeLightbox () {
+    document.getElementById('lightbox').style.display="none";
+}
+
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+  }
+
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+    let i
+    let slides = document.getElementsByClassName('img-slides')
+
+    if(n > slides.length) {
+        slideIndex = 1
+    }
+    if(n < 1) {
+        slideIndex = slides.length
+    }
+
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slides[slideIndex-1].style.display = "block";
 }

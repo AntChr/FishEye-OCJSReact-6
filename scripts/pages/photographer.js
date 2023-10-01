@@ -10,7 +10,6 @@ async function getPhotographerById(id) {
         const photographermedia = photographersData.media;
         const photographer = photographers.find(photographer => photographer.id === id);
         const media = photographermedia.filter(item => item.photographerId === id);
-        console.log('Médias récupérés:', media);
         return {photographer, media };
         
     } catch (error) {
@@ -39,27 +38,26 @@ async function displayPhotographerMedia(media) {
     for (const mediaData of media) {
         const mediaModel = mediaTemplate(mediaData);
         const mediaCardDOM = mediaModel.getMediaCardDOM();
+
+        if (mediaData.video) {
+            mediaCardDOM.querySelector('video').setAttribute('src', `assets/photographers/${mediaData.photographerId}/${mediaData.video}`);
+        }
+
         mediaSection.appendChild(mediaCardDOM);
     }
 }
 async function init() {
-    // Extraire l'ID de l'URL
     const urlSearchParams = new URLSearchParams(window.location.search);
     const id = urlSearchParams.get("id");
 
     if (!id) {
-        // Gérer le cas où l'ID n'est pas présent dans l'URL
         return;
     }
 
-    // Récupérer le photographe par ID
     const { photographer, media } = await getPhotographerById(parseInt(id, 10));
-    console.log('Médias récupérés dans init:', media);
     if (photographer) {
-        // Afficher le photographe sur la page
         displayPhotographer(photographer);
 
-        // Afficher les médias du photographe sur la page en passant 'media' en paramètre
         displayPhotographerMedia(media);
     }
 }

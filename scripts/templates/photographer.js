@@ -9,9 +9,6 @@ function photographerTemplate(data) {
         const photographerLink = document.createElement('a');
         photographerLink.href = `/photographer.html?id=${id}`;
 
-        const imageContainer = document.createElement('div');
-        imageContainer.classList.add('format-image');
-
         const img = document.createElement( 'img' );
         img.setAttribute("src", picture)
 
@@ -40,9 +37,9 @@ function photographerTemplate(data) {
         const priceperday = document.createElement('span');
         priceperday.textContent='€/jour'
         
-        imageContainer.appendChild(img);
+
         article.appendChild(photographerLink);
-        photographerLink.appendChild(imageContainer);
+        photographerLink.appendChild(img);
         article.appendChild(h2);
         article.appendChild(locationcontainer);
         locationcontainer.appendChild(h3);

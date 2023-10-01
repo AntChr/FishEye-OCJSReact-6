@@ -44,18 +44,19 @@ h1 {
     font-size: 36px;
     margin: 0px;
 }
-.format-image {
+.photographer_section article a {
     width: 200px;
     height: 200px;
+    display: flex;
+    justify-content: center;
+}
+.photographer_section article img {
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     border-radius: 50%;
     fill: #C4C4C4;
     filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.25));
-}
-.photographer_section article img {
-    width: 526px;
-    height: 358px;
-    margin: -50px -164px -108px -162px;
     object-fit: cover;
 
 }

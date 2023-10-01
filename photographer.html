@@ -19,20 +19,51 @@
       </div>
       <div class="photograph-media">
       </div>
+      <div id="lightbox" class="lightbox">
+        <div class="lightbox-content">
+          <img src="assets/icons/close-lightbox.svg" class="close" onclick="closeLightbox()" />
+          <img src="assets/icons/prev.svg" class="prev" onclick="plusSlides(-1)" />
+          <div class="media-content"></div>
+          <img src="assets/icons/next.svg" class="next" onclick="plusSlides(1)" />
+        </div>
+    </div>
+    <div class="likes_price"></div>
     </main>
     <div id="contact_modal">
 			<div class="modal">
 				<header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+          <div class="modal_header">
+            <h2>Contactez-moi</h2>
+          </div>
+          <div class="modal_header_img">
+            <img src="assets/icons/close.svg" onclick="closeModal()" />
+          </div>
         </header>
-				<form>
-					<div>
-						<label>Prénom</label>
-						<input />
-					</div>
-          <button class="contact_button">Envoyer</button>
-				</form>
+        <form>
+          <div>
+            <label>Prénom</label>
+            <input
+            id="first"
+            type="text"
+             />
+            <label>Nom</label>
+            <input
+            id="last"
+            type="text"
+            />
+            <label>Email</label>
+            <input
+            id="email"
+            type="text"
+            />
+            <label>Votre message</label>
+            <input
+            id="message"
+            type="text"
+            />
+          </div>
+          <button type="submit" class="send_button">Envoyer</button>
+        </form>
 			</div>
 		</div>
     <script src="/scripts/templates/photographer-profile.js"></script>
