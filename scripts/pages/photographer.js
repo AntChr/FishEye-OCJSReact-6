@@ -1,4 +1,5 @@
-//Mettre le code JavaScript lié à la page photographer.html
+let media = [];
+
 async function getPhotographerById(id) {
     try {
         const response = await fetch('../../data/photographers.json');
@@ -8,15 +9,16 @@ async function getPhotographerById(id) {
         const photographersData = await response.json();
         const photographers = photographersData.photographers;
         const photographermedia = photographersData.media;
-        const photographer = photographers.find(photographer => photographer.id === id);
-        const media = photographermedia.filter(item => item.photographerId === id);
-        return {photographer, media };
-        
+        const photographer = photographers.find((photographer) => photographer.id === id);
+        media = photographermedia.filter((item) => item.photographerId === id);
+
+        return { photographer, media };
     } catch (error) {
         console.error(error);
         return null;
     }
 }
+
 
 async function displayPhotographer(photographer) {
     if (!photographer) {
@@ -28,11 +30,11 @@ async function displayPhotographer(photographer) {
     const userCardDOM = photographerModel.getUserCardDOM();
     headerSection.appendChild(userCardDOM);
 }
-async function displayPhotographerMedia(media) {
+async function displayPhotographerMedia(media, photographer) {
     if (!media) {
         return;
     }
-    
+
     const mediaSection = document.querySelector(".photograph-media");
 
     for (const mediaData of media) {
@@ -45,6 +47,30 @@ async function displayPhotographerMedia(media) {
 
         mediaSection.appendChild(mediaCardDOM);
     }
+
+    const photographerModel = photographerTemplate(photographer);
+    photographerModel.displayTotalLikes()
+}
+
+async function display(photographer, media) {
+    displayPhotographer(photographer)
+    displayPhotographerMedia(media, photographer)
+}
+function filter(option) {
+    let sortedMedia = [];
+    if (option === "Popularité") {
+        sortedMedia = media.sort((a, b) => b.likes - a.likes);
+    } else if (option === "Date") {
+        sortedMedia = media.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (option === "Titre") {
+        sortedMedia = media.sort((a, b) => a.title.localeCompare(b.title)); 
+    }
+    const mediaSection = document.querySelector(".photograph-media");
+
+    mediaSection.innerHTML = "";
+
+    displayPhotographerMedia(sortedMedia)
+
 }
 async function init() {
     const urlSearchParams = new URLSearchParams(window.location.search);
@@ -56,9 +82,10 @@ async function init() {
 
     const { photographer, media } = await getPhotographerById(parseInt(id, 10));
     if (photographer) {
-        displayPhotographer(photographer);
+        // displayPhotographer(photographer);
 
-        displayPhotographerMedia(media);
+        // displayPhotographerMedia(media);
+        display(photographer, media)
     }
 }
 
