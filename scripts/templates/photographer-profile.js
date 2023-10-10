@@ -14,6 +14,7 @@ function photographerTemplate(data) {
 
         const img = document.createElement('img');
         img.setAttribute("src", picture);
+        img.setAttribute('alt', `${name} profil picture`);
 
         const h2 = document.createElement('h2');
         h2.textContent = name;
@@ -146,6 +147,7 @@ function mediaTemplate(data) {
         if (isVideo) {
             const video = document.createElement('video');
             video.setAttribute('src', videoUrl);
+            video.setAttribute('alt', `${title}`);
             video.setAttribute('controls', '');
             video.setAttribute('autoplay', '');
             video.setAttribute('onClick', `openLightbox(); currentSlide(${currentSlideIndex});`);
@@ -153,6 +155,7 @@ function mediaTemplate(data) {
         } else {
             const img = document.createElement('img');
             img.setAttribute('src', imageUrl);
+            img.setAttribute('alt', `${title}`);
             img.setAttribute('onClick', `openLightbox(); currentSlide(${currentSlideIndex});`);
             profilimage.appendChild(img);
         }
@@ -189,12 +192,14 @@ function mediaTemplate(data) {
         if (isVideo) {
             const video = document.createElement('video');
             video.setAttribute('src', videoUrl);
+            video.setAttribute('alt', `${title}`);
             video.setAttribute('controls', '');
             video.setAttribute('autoplay', '');
             lightboxContainer.appendChild(video);
         } else {
             const img = document.createElement('img');
             img.setAttribute('src', imageUrl);
+            img.setAttribute('alt', `${title}`);
             lightboxContainer.appendChild(img);
         }
 

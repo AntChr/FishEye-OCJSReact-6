@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/photographer.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
@@ -10,8 +10,8 @@
   </head>
   <body>
     <header>
-      <a href="/index.html">
-        <img src="assets/images/logo.png" class="logo" />
+      <a href="/index.html" alt="link index">
+        <img src="assets/images/logo.png" alt="Logo Fisheye" class="logo" />
       </a>
     </header>
     <main id="main">
@@ -22,7 +22,7 @@
         <div class="dropdown">
           <div class="dropdown-toggle">
             <span class="selected-option">Popularité</span>
-            <img src="assets/icons/down.svg" class="arrow"/>
+            <img src="assets/icons/down.svg" alt="arrow" class="arrow"/>
           </div>
           <ul class="dropdown-options">
             <li class="selected">Popularité</li>
@@ -35,10 +35,10 @@
       </div>
       <div id="lightbox" class="lightbox">
         <div class="lightbox-content">
-          <img src="assets/icons/close-lightbox.svg" class="close" onclick="closeLightbox()" />
-          <img src="assets/icons/prev.svg" class="prev" onclick="plusSlides(-1)" />
+          <img src="assets/icons/close-lightbox.svg" alt="close" class="close" onclick="closeLightbox()" />
+          <img src="assets/icons/prev.svg" alt="previous" class="prev" onclick="plusSlides(-1)" />
           <div class="media-content"></div>
-          <img src="assets/icons/next.svg" class="next" onclick="plusSlides(1)" />
+          <img src="assets/icons/next.svg" alt="next" class="next" onclick="plusSlides(1)" />
         </div>
     </div>
     <div class="likes_price"></div>
@@ -50,30 +50,35 @@
             <h2>Contactez-moi</h2>
           </div>
           <div class="modal_header_img">
-            <img src="assets/icons/close.svg" onclick="closeModal()" />
+            <img src="assets/icons/close.svg" alt="close" onclick="closeModal()" />
           </div>
         </header>
-        <form>
+        <form for="contactform">
           <div>
-            <label>Prénom</label>
+            <label for="firstname">Prénom</label>
             <input
-            id="first"
+            id="firstname"
             type="text"
+            name="firstname"
              />
-            <label>Nom</label>
+            <label for="lastname">Nom</label>
             <input
             id="last"
             type="text"
+            name="lastname"
+            title="lastname"
             />
-            <label>Email</label>
+            <label for="email">Email</label>
             <input
             id="email"
             type="text"
+            name="email"
             />
-            <label>Votre message</label>
+            <label for="message">Votre message</label>
             <input
             id="message"
             type="text"
+            name="message"
             />
           </div>
           <button type="submit" class="send_button">Envoyer</button>
