@@ -112,8 +112,8 @@ main {
     grid-row-gap: 30px;
     padding-top: 100px;
 }
-.media_image img,
-.media_image video {
+.card_media img,
+.card_media video {
     width: 100%;
     height: 300px;
     object-fit: cover;
@@ -236,7 +236,7 @@ form input {
 .lightbox {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     left: 0;
     top: 0;
     padding-top: 3%;
