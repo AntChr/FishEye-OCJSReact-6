@@ -385,9 +385,15 @@ form input {
     flex-shrink: 0;
     border-radius: 5px;
     background: #901C1C;
+    color: #FFF;
+    font-family: DM Sans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
   
-  .dropdown-toggle {
+  .dropdown option {
     cursor: pointer;
     display: flex;
     justify-content: space-between;

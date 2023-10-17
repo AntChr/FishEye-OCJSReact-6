@@ -14,31 +14,25 @@
         <img src="assets/images/logo.png" alt="Logo Fisheye" class="logo" />
       </a>
     </header>
-    <main id="main">
+    <main id="main" aria-hidden="false">
       <div class="photograph-header">
       </div>
       <div class="filter">
         <p>Trier par </p>
-        <div class="dropdown">
-          <div class="dropdown-toggle">
-            <span class="selected-option">Popularité</span>
-            <img src="assets/icons/down.svg" alt="arrow" class="arrow"/>
-          </div>
-          <ul class="dropdown-options">
-            <li class="selected">Popularité</li>
-            <li>Date</li>
-            <li>Titre</li>
-          </ul>
-        </div>
+        <select class="dropdown" tabindex="0">
+          <option value="Popularité">Popularité</option>
+          <option value="Date">Date</option>
+          <option value="Titre">Titre</option>
+        </select>
       </div>
       <div class="photograph-media">
       </div>
       <div id="lightbox" class="lightbox">
         <div class="lightbox-content">
-          <img src="assets/icons/close-lightbox.svg" alt="close" class="close" onclick="closeLightbox()" />
-          <img src="assets/icons/prev.svg" alt="previous" class="prev" onclick="plusSlides(-1)" />
+          <img src="assets/icons/close-lightbox.svg" alt="close" class="close"/>
+          <img src="assets/icons/prev.svg" alt="previous" class="prev" />
           <div class="media-content"></div>
-          <img src="assets/icons/next.svg" alt="next" class="next" onclick="plusSlides(1)" />
+          <img src="assets/icons/next.svg" alt="next" class="next" />
         </div>
     </div>
     <div class="likes_price"></div>
@@ -49,8 +43,8 @@
           <div class="modal_header">
             <h2>Contactez-moi</h2>
           </div>
-          <div class="modal_header_img">
-            <img src="assets/icons/close.svg" alt="close" onclick="closeModal()" />
+          <div class="modal_header_img" tabindex="0">
+            <img src="assets/icons/close.svg" alt="close" tabindex="0" class="closemodal"/>
           </div>
         </header>
         <form for="contactform">

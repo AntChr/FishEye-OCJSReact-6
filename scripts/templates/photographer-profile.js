@@ -1,5 +1,32 @@
+function displayTotalLikes() {
+    let totalLikes = 0;
+    const likes = document.querySelectorAll('.likes');
+    // eslint-disable-next-line no-return-assign
+    likes.forEach((like) => totalLikes += parseInt(like.textContent, 10));
+    const likespriceContainer = document.querySelector('.likes_price');
+    let likesContainer;
+    if (document.querySelector('.likes_container')) {
+        likesContainer = document.querySelector('.likes_container');
+        likesContainer.innerHTML = '';
+    } else {
+        likesContainer = document.createElement('div');
+        likesContainer.classList.add('likes_container');
+    }
+
+    const spanLikes = document.createElement('span');
+    spanLikes.classList.add('number');
+    spanLikes.textContent = totalLikes;
+    const spanhearts = document.createElement('i');
+    spanhearts.classList.add('fa', 'fa-solid', 'fa-heart');
+    likesContainer.appendChild(spanLikes);
+    spanLikes.appendChild(spanhearts);
+    likespriceContainer.appendChild(likesContainer);
+}
 // eslint-disable-next-line no-unused-vars
 function photographerTemplate(data) {
+    if (!data) {
+        return;
+    }
     const {
         name, portrait, city, country, tagline, price,
     } = data;
@@ -42,6 +69,7 @@ function photographerTemplate(data) {
         contactButton.setAttribute('tabindex', '0');
         contactButton.classList.add('contact_button');
         contactButton.textContent = 'Contactez-moi';
+        // eslint-disable-next-line no-undef
         contactButton.onclick = displayModal;
 
         const likespriceContainer = document.querySelector('.likes_price');
@@ -74,62 +102,18 @@ function photographerTemplate(data) {
         return cardContainer;
     }
 
+    // eslint-disable-next-line consistent-return
     return {
-        // eslint-disable-next-line no-use-before-define
         name, picture, getUserCardDOM, displayTotalLikes,
     };
 }
 
-function displayTotalLikes() {
-    let totalLikes = 0;
-    const likes = document.querySelectorAll('.likes');
-    // eslint-disable-next-line no-return-assign
-    likes.forEach((like) => totalLikes += parseInt(like.textContent, 10));
-    const likespriceContainer = document.querySelector('.likes_price');
-    let likesContainer;
-    if (document.querySelector('.likes_container')) {
-        likesContainer = document.querySelector('.likes_container');
-        likesContainer.innerHTML = '';
-    } else {
-        likesContainer = document.createElement('div');
-        likesContainer.classList.add('likes_container');
-    }
+const selectDropdown = document.querySelector('.dropdown');
 
-    const spanLikes = document.createElement('span');
-    spanLikes.classList.add('number');
-    spanLikes.textContent = totalLikes;
-    const spanhearts = document.createElement('i');
-    spanhearts.classList.add('fa', 'fa-solid', 'fa-heart');
-    likesContainer.appendChild(spanLikes);
-    spanLikes.appendChild(spanhearts);
-    likespriceContainer.appendChild(likesContainer);
-}
-const dropdownToggle = document.querySelector('.dropdown-toggle');
-const dropdownOptions = document.querySelector('.dropdown-options');
-const arrow = document.querySelector('.arrow');
-const options = document.querySelectorAll('.dropdown-options li');
-
-options.forEach((option) => {
-    option.addEventListener('click', () => {
-        const selectedText = option.textContent;
-        document.querySelector('.selected-option').textContent = selectedText;
-        dropdownOptions.classList.remove('show');
-        arrow.style.transform = 'rotate(0deg)';
-        // eslint-disable-next-line no-undef
-        filter(selectedText);
-    });
-});
-
-dropdownToggle.addEventListener('click', () => {
-    dropdownOptions.classList.toggle('show');
-    arrow.style.transform = dropdownOptions.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
-});
-
-document.addEventListener('click', (event) => {
-    if (!dropdownToggle.contains(event.target) && !dropdownOptions.contains(event.target)) {
-        dropdownOptions.classList.remove('show');
-        arrow.style.transform = 'rotate(0deg)';
-    }
+selectDropdown.addEventListener('change', (event) => {
+    const selectedOption = event.target.value;
+    // eslint-disable-next-line no-undef
+    filter(selectedOption);
 });
 
 let slideIndex = 1;
@@ -173,6 +157,20 @@ function currentSlide(n) {
     showSlides(slideIndex = n);
 }
 
+const closebutton = document.querySelector('.close');
+const prevbutton = document.querySelector('.prev');
+const nextbutton = document.querySelector('.next');
+
+closebutton.addEventListener('click', () => {
+    closeLightbox();
+});
+prevbutton.addEventListener('click', () => {
+    plusSlides(-1);
+});
+nextbutton.addEventListener('click', () => {
+    plusSlides(1);
+});
+// eslint-disable-next-line no-unused-vars
 function mediaTemplate(data) {
     const {
         title, photographerId, image, video, likes,
@@ -190,15 +188,14 @@ function mediaTemplate(data) {
     let currentSlideIndex = 1;
     const mediaCards = document.querySelectorAll('.card_media');
     const numberOfMediaCards = mediaCards.length;
-    for (i = 0; i < numberOfMediaCards; i++) {
-        // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < numberOfMediaCards; i++) {
         currentSlideIndex++;
     }
 
     function createMediaElement() {
         const mediaElement = isVideo ? document.createElement('video') : document.createElement('img');
         mediaElement.setAttribute('src', isVideo ? videoUrl : imageUrl);
-        mediaElement.setAttribute('alt', isVideo ? (title + ' video') : (title + ' image'));
+        mediaElement.setAttribute('alt', isVideo ? (`${title} video`) : (`${title} image`));
         mediaElement.setAttribute('onClick', `openLightbox(); currentSlide(${currentSlideIndex});`);
 
         if (isVideo) {
@@ -230,6 +227,7 @@ function mediaTemplate(data) {
 
     const spanHearts = document.createElement('i');
     spanHearts.classList.add('fa', 'fa-solid', 'fa-heart');
+    spanHearts.setAttribute('tabindex', '0');
 
     likesNumber.appendChild(span);
     likesNumber.appendChild(spanHearts);

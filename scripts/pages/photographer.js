@@ -1,5 +1,4 @@
 let media = [];
-
 async function getPhotographerById(id) {
     try {
         const response = await fetch('../../data/photographers.json');
@@ -30,15 +29,15 @@ async function displayPhotographer(photographer) {
     const userCardDOM = photographerModel.getUserCardDOM();
     headerSection.appendChild(userCardDOM);
 }
-async function displayPhotographerMedia(media, photographer) {
+async function displayPhotographerMedia(mediadata, photographer) {
     if (!media) {
         return;
     }
-
     const mediaSection = document.querySelector('.photograph-media');
 
     // eslint-disable-next-line no-restricted-syntax
     for (const mediaData of media) {
+        // eslint-disable-next-line no-undef
         const mediaModel = mediaTemplate(mediaData);
         const mediaCardDOM = mediaModel.getMediaCardDOM();
 
@@ -54,9 +53,9 @@ async function displayPhotographerMedia(media, photographer) {
     photographerModel.displayTotalLikes();
 }
 
-async function display(photographer, media) {
+async function display(photographer, mediadata) {
     displayPhotographer(photographer);
-    displayPhotographerMedia(media, photographer);
+    displayPhotographerMedia(mediadata, photographer);
 }
 // eslint-disable-next-line no-unused-vars
 function filter(option) {
@@ -82,12 +81,12 @@ async function init() {
         return;
     }
 
-    const { photographer, media } = await getPhotographerById(parseInt(id, 10));
+    const { photographer, mediadata } = await getPhotographerById(parseInt(id, 10));
     if (photographer) {
         // displayPhotographer(photographer);
 
         // displayPhotographerMedia(media);
-        display(photographer, media);
+        display(photographer, mediadata);
     }
 }
 
