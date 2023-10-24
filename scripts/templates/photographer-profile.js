@@ -137,9 +137,14 @@ function showSlides(n) {
         slides[slideIndex - 1].style.display = 'block';
     }
 }
+const closebutton = document.querySelector('.close');
+const prevbutton = document.querySelector('.prev');
+const nextbutton = document.querySelector('.next');
+
 function openLightbox() {
     slideIndex = 1;
     document.getElementById('lightbox').style.display = 'block';
+    prevbutton.focus();
 }
 // eslint-disable-next-line no-unused-vars
 function closeLightbox() {
@@ -157,18 +162,33 @@ function currentSlide(n) {
     showSlides(slideIndex = n);
 }
 
-const closebutton = document.querySelector('.close');
-const prevbutton = document.querySelector('.prev');
-const nextbutton = document.querySelector('.next');
+closebutton.setAttribute('tabindex', '0');
+prevbutton.setAttribute('tabindex', '0');
+nextbutton.setAttribute('tabindex', '0');
 
 closebutton.addEventListener('click', () => {
     closeLightbox();
 });
+closebutton.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        closeLightbox();
+    }
+});
 prevbutton.addEventListener('click', () => {
     plusSlides(-1);
 });
+prevbutton.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        plusSlides(-1);
+    }
+});
 nextbutton.addEventListener('click', () => {
     plusSlides(1);
+});
+nextbutton.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        plusSlides(1);
+    }
 });
 // eslint-disable-next-line no-unused-vars
 function mediaTemplate(data) {
@@ -196,10 +216,17 @@ function mediaTemplate(data) {
         const mediaElement = isVideo ? document.createElement('video') : document.createElement('img');
         mediaElement.setAttribute('src', isVideo ? videoUrl : imageUrl);
         mediaElement.setAttribute('alt', isVideo ? (`${title} video`) : (`${title} image`));
+        mediaElement.setAttribute('tabindex', '0');
         mediaElement.setAttribute('onClick', `openLightbox(); currentSlide(${currentSlideIndex});`);
 
+        mediaElement.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                openLightbox();
+                currentSlide(currentSlideIndex);
+            }
+        });
+
         if (isVideo) {
-            mediaElement.setAttribute('controls', '');
             mediaElement.setAttribute('autoplay', '');
         }
 
@@ -238,6 +265,7 @@ function mediaTemplate(data) {
 
     const lightboxContainer = document.createElement('div');
     lightboxContainer.classList.add('img-slides');
+    lightboxContainer.setAttribute('tabindex', '0');
     mediaContent.appendChild(lightboxContainer);
 
     lightboxContainer.appendChild(createMediaElement());
@@ -265,5 +293,24 @@ document.addEventListener('click', (event) => {
             span.textContent = parseInt(span.textContent, 10) + 1;
         }
         displayTotalLikes();
+    }
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        if (event.target.classList.contains('fa-heart')) {
+            const span = event.target.parentElement.querySelector('span');
+
+            const isLiked = span.getAttribute('data-liked') === 'true';
+
+            if (isLiked) {
+                span.setAttribute('data-liked', 'false');
+                span.textContent = parseInt(span.textContent, 10) - 1;
+            } else {
+                span.setAttribute('data-liked', 'true');
+                span.textContent = parseInt(span.textContent, 10) + 1;
+            }
+            displayTotalLikes();
+        }
     }
 });

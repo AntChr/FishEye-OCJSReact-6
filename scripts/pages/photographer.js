@@ -58,7 +58,7 @@ async function display(photographer, mediadata) {
     displayPhotographerMedia(mediadata, photographer);
 }
 // eslint-disable-next-line no-unused-vars
-function filter(option) {
+function filter(option, photographer) {
     let sortedMedia = [];
     if (option === 'Popularité') {
         sortedMedia = media.sort((a, b) => b.likes - a.likes);
@@ -71,7 +71,7 @@ function filter(option) {
 
     mediaSection.innerHTML = '';
 
-    displayPhotographerMedia(sortedMedia);
+    displayPhotographerMedia(sortedMedia, photographer);
 }
 async function init() {
     const urlSearchParams = new URLSearchParams(window.location.search);
