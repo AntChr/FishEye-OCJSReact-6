@@ -49,12 +49,12 @@ async function displayPhotographerMedia(mediadata, photographer) {
     }
 
     // eslint-disable-next-line no-undef
-    const photographerModel = photographerTemplate(photographer);
-    photographerModel.displayTotalLikes();
+    const photographerModel = photographerTemplate(mediadata, photographer);
+    photographerModel.displayTotalLikes(mediadata, photographer);
 }
 
-async function display(photographer, mediadata) {
-    displayPhotographer(photographer);
+async function display(mediadata, photographer) {
+    displayPhotographer(mediadata, photographer);
     displayPhotographerMedia(mediadata, photographer);
 }
 // eslint-disable-next-line no-unused-vars

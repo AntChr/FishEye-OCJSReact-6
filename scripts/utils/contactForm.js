@@ -23,6 +23,11 @@ function closeModal() {
 closemodal.addEventListener('click', () => {
     closeModal();
 });
+closemodal.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        closeModal();
+    }
+});
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         closeModal();

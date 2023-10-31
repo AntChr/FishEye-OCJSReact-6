@@ -227,7 +227,7 @@ function mediaTemplate(data) {
         });
 
         if (isVideo) {
-            mediaElement.setAttribute('autoplay', '');
+            mediaElement.setAttribute('autoplay', 'controls', '');
         }
 
         mediaElement.addEventListener('click', openLightbox);
@@ -253,7 +253,7 @@ function mediaTemplate(data) {
     span.textContent = likes;
 
     const spanHearts = document.createElement('i');
-    spanHearts.classList.add('fa', 'fa-solid', 'fa-heart');
+    spanHearts.classList.add('fa', 'fa-solid', 'fa-heart', 'like_heart');
     spanHearts.setAttribute('tabindex', '0');
 
     likesNumber.appendChild(span);
@@ -278,9 +278,9 @@ function mediaTemplate(data) {
         title, image, video, getMediaCardDOM: () => mediaContainer,
     };
 }
-
+// Ajoute ou enlève un like lorsque l'utilisateur clique sur le coeur
 document.addEventListener('click', (event) => {
-    if (event.target.classList.contains('fa-heart')) {
+    if (event.target.classList.contains('like_heart')) {
         const span = event.target.parentElement.querySelector('span');
 
         const isLiked = span.getAttribute('data-liked') === 'true';
@@ -295,10 +295,10 @@ document.addEventListener('click', (event) => {
         displayTotalLikes();
     }
 });
-
+// Ajoute ou enlève un like lorsqu'on appuye sur la touche entrer au niveau du coeur
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        if (event.target.classList.contains('fa-heart')) {
+        if (event.target.classList.contains('like_heart')) {
             const span = event.target.parentElement.querySelector('span');
 
             const isLiked = span.getAttribute('data-liked') === 'true';
